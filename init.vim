@@ -1,7 +1,4 @@
-" basic
-"F2 to switch paste mode
-set pastetoggle=<F2>
-"语法高亮
+" basic F2 to switch paste mode set pastetoggle=<F2> "语法高亮
 syntax on
 "行号
 set nu
@@ -24,28 +21,31 @@ set smartcase
 " 自动保存
 set autowrite
 
-
 " alias
 cnoreabbrev Rg Rg! 
-cnoreabbrev Files Files! 
+" cnoreabbrev Files Files! 
 
 " plugin
 call plug#begin()
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sainnhe/sonokai'
 Plug 'neovim/nvim-lspconfig'
 Plug 'ojroques/nvim-lspfuzzy'
 Plug 'windwp/nvim-autopairs'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'kana/vim-textobj-user' 
+" Plug 'kana/vim-textobj-function'
 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
+
+Plug 'lewis6991/impatient.nvim'
 
 call plug#end()
 
@@ -60,22 +60,27 @@ call plug#end()
 " let g:go_highlight_function_parameters = 1
 
 " Auto formatting and importing
-" let g:go_fmt_autosave = 1
-" let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
 
 " Status line types/signatures
 " let g:go_auto_type_info = 1
 
+let g:go_gopls_enabled = 0 
+let g:go_def_mapping_enabled = 0
+
 " fold
-set foldmethod=syntax
-set foldlevelstart=99
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+" set foldlevelstart=99
 
 " colors
 colorscheme sonokai
 
 " fzf
 " let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'down': '30%' }
+let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 1.0, 'relative': v:true, 'yoffset': 1.0 , 'xoffset': 0, 'border': 'rounded'} }
+" let g:fzf_layout = { 'down': '30%' }
 " let g:fzf_colors =
 "     \ { 'fg':      ['fg', 'Normal'],
 "       \ 'bg':      ['bg', 'Normal'],
@@ -92,6 +97,7 @@ let g:fzf_layout = { 'down': '30%' }
 "       \ 'header':  ['fg', 'Comment'] }
 
 lua << EOF
+require('impatient')
 require('lspfuzzy').setup {}
 require('cmpconf')
 require('lspconf')

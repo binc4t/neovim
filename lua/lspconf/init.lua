@@ -42,3 +42,6 @@ require'lspconfig'.gopls.setup{
     on_attach = custom_on_attach,
     flags = lsp_flags
 }
+
+require'lspconfig'.clangd.setup{}
+
